@@ -38,7 +38,7 @@ dependencies = [
 [project.optional-dependencies]
 dashboard = [
     "dash>=2.17",
-    "dash-bootstrap-components>=1.6",
+    "dash-bootstrap-components>=2.0.4",
     "plotly>=5.20",
     "pandas>=2.0",
 ]

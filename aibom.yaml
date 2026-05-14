@@ -1,0 +1,49 @@
+# aibom.yaml — AI Bill of Materials configuration
+# Place this file in the root of the project you're scanning, or pass -c <path>
+
+project:
+  name: my-ml-project          # Defaults to directory name if omitted
+  version: "1.0.0"
+
+output:
+  path: null                   # Auto-named aibom-<name>-<timestamp>.json if null
+
+# ── Models ────────────────────────────────────────────────────────────────────
+# Manual entries supplement auto-detection. Use expected_hash for tamper detection.
+models: []
+# - name: bert-base-uncased
+#   source: huggingface
+#   source_id: google-bert/bert-base-uncased
+#   license: Apache-2.0
+#   version: "1.0"
+#   path: models/bert-base-uncased/pytorch_model.bin
+#   expected_hash: <sha256-hex>   # triggers tamper detection if file exists
+
+# ── Datasets ──────────────────────────────────────────────────────────────────
+# Auto-detected from: code imports, data directories, config keys, HF cache.
+# Add manual entries for datasets that can't be auto-detected.
+datasets: []
+# - name: squad
+#   source: https://huggingface.co/datasets/rajpurkar/squad
+#   version: "1.1"
+#   license: CC-BY-4.0
+#   hash: <sha256-hex-of-archive>
+#   gdpr_relevant: false
+#   lgpd_relevant: false
+#   confidential: false
+
+# ── Licenses ──────────────────────────────────────────────────────────────────
+# SPDX IDs allowed in addition to the built-in permissive list.
+license_allowlist: []
+# - LicenseRef-custom-internal
+# - CC-BY-4.0
+
+# ── Privacy / Compliance ──────────────────────────────────────────────────────
+# Extra keywords that trigger GDPR/LGPD flagging (matched against dataset name/source).
+gdpr_sources: []
+# - internal-survey-responses
+# - customer-clickstream
+
+# ── HuggingFace cache ─────────────────────────────────────────────────────────
+# Override the default ~/.cache/huggingface/hub location.
+hf_cache_dir: null

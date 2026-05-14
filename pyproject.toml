@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-bom"
+version = "0.1.0"
+description = "AI Bill of Materials generator for ML projects"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Moacir Filho", email = "moacir.js.filho@gmail.com"},
+]
+keywords = ["ai", "bom", "bill-of-materials", "sbom", "security", "mlops", "lgpd", "gdpr", "spdx"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "click>=8.1",
+    "rich>=13.0",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+    "packaging>=24.0",
+    "cvss>=3.6",
+]
+
+[project.optional-dependencies]
+dashboard = [
+    "dash>=2.17",
+    "dash-bootstrap-components>=1.6",
+    "plotly>=5.20",
+    "pandas>=2.0",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov",
+    "ruff>=0.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourname/ai-bom"
+Issues = "https://github.com/yourname/ai-bom/issues"
+Changelog = "https://github.com/yourname/ai-bom/blob/main/CHANGELOG.md"
+
+[project.scripts]
+ai-bom = "aibom.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["aibom"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,9 +1,11 @@
 # ai-bom
 
-![Version](https://img.shields.io/badge/version-0.1.0-blue)
-![Python](https://img.shields.io/badge/python-3.10+-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![SPDX](https://img.shields.io/badge/output-SPDX_3.0-teal)
+[![CI](https://github.com/DeltaCodec/AIBOM-CLI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/DeltaCodec/AIBOM-CLI/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/DeltaCodec/AIBOM-CLI/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/DeltaCodec/AIBOM-CLI/actions/workflows/codeql.yml)
+[![PyPI version](https://img.shields.io/pypi/v/ai-bom.svg)](https://pypi.org/project/ai-bom/)
+[![Python versions](https://img.shields.io/pypi/pyversions/ai-bom.svg)](https://pypi.org/project/ai-bom/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![SPDX 3.0](https://img.shields.io/badge/output-SPDX_3.0-teal.svg)](https://spdx.github.io/spdx-spec/v3.0/)
 
 **AI Bill of Materials generator for ML projects.**
 
@@ -37,8 +39,8 @@ pip install ai-bom
 From source:
 
 ```bash
-git clone https://github.com/yourname/ai-bom
-cd ai-bom
+git clone https://github.com/DeltaCodec/AIBOM-CLI.git
+cd AIBOM-CLI
 pip install -e .
 ```
 
@@ -158,17 +160,13 @@ hf_cache_dir: null
 
 ---
 
-## Sample output
-
-> Add a screenshot of `ai-bom scan .` terminal output here
-
----
-
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
----
+## Security
+
+To report a vulnerability, follow the process in [SECURITY.md](SECURITY.md). Please **do not** open public issues for security problems.
 
 ## License
 

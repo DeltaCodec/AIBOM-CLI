@@ -5,8 +5,8 @@ Thanks for your interest in contributing. Here's how to get set up.
 ## Development environment
 
 ```bash
-git clone https://github.com/yourname/ai-bom
-cd ai-bom
+git clone https://github.com/DeltaCodec/AIBOM-CLI.git
+cd AIBOM-CLI
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"

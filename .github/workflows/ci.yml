@@ -6,20 +6,33 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
 
       - name: Install dependencies
         run: |
@@ -34,5 +47,5 @@ jobs:
 
       - name: Smoke test — scan the project itself
         run: |
-          ai-bom scan . --no-hub --no-cve --quiet --output /tmp/aibom-ci.json
-          python -c "import json; d=json.load(open('/tmp/aibom-ci.json')); assert d.get('spdxVersion') == 'SPDX-3.0', 'invalid output'"
+          ai-bom scan . --no-hub --no-cve --quiet --output "${RUNNER_TEMP}/aibom-ci.json"
+          python -c "import json, os; d=json.load(open(os.environ['RUNNER_TEMP'] + '/aibom-ci.json')); assert d.get('spdxVersion') == 'SPDX-3.0', 'invalid output'"

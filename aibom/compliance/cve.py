@@ -5,6 +5,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass
 from typing import Optional
+from urllib.parse import quote
 
 import requests
 from cvss import CVSS3, CVSS4
@@ -179,7 +180,7 @@ def _fetch_ghsa_severity(ghsa_id: str) -> tuple[str, Optional[float], Optional[s
     if cached is not None:
         return tuple(cached)  # type: ignore[return-value]
     try:
-        resp = requests.get(_OSV_URL.format(ghsa_id), timeout=10)
+        resp = requests.get(_OSV_URL.format(quote(ghsa_id, safe="")), timeout=10)
         resp.raise_for_status()
         data = resp.json()
 
@@ -220,7 +221,7 @@ def _fetch_nvd_severity(cve_id: str) -> tuple[str, Optional[float], Optional[str
         if wait > 0:
             time.sleep(wait)
         try:
-            resp = requests.get(_NVD_URL.format(cve_id), timeout=15)
+            resp = requests.get(_NVD_URL.format(quote(cve_id, safe="")), timeout=15)
             _nvd_last_call = time.monotonic()
             resp.raise_for_status()
             data = resp.json()
@@ -249,7 +250,7 @@ def _fetch_osv(v: dict, installed: str) -> CVEDetail:
         return CVEDetail(**cached)
 
     try:
-        resp = requests.get(_OSV_URL.format(vid), timeout=10)
+        resp = requests.get(_OSV_URL.format(quote(vid, safe="")), timeout=10)
         resp.raise_for_status()
         data = resp.json()
 

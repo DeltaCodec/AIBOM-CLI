@@ -5,6 +5,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from typing import Optional
+from urllib.parse import quote
 
 import requests
 
@@ -105,12 +106,14 @@ def _fetch_pypi_licenses(
 
     def fetch(name: str, version: str) -> tuple[str, Optional[str]]:
         try:
-            url = _PYPI_URL.format(name=name, version=version)
+            safe_name = quote(name, safe="")
+            safe_version = quote(version, safe="")
+            url = _PYPI_URL.format(name=safe_name, version=safe_version)
             resp = requests.get(url, timeout=10)
             if resp.status_code == 404:
                 # version not on PyPI (editable/local) — try without version
                 resp = requests.get(
-                    f"https://pypi.org/pypi/{name}/json", timeout=10
+                    f"https://pypi.org/pypi/{safe_name}/json", timeout=10
                 )
             resp.raise_for_status()
             info = resp.json().get("info", {})

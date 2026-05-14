@@ -51,7 +51,8 @@ def scan_hf_cache(
 
     filter_ids: if given, only return models whose ID is in this set.
     """
-    root = Path(cache_dir) if cache_dir else (_env_cache() or _DEFAULT_CACHE)
+    root = (Path(cache_dir).expanduser().resolve() if cache_dir
+            else (_env_cache() or _DEFAULT_CACHE))
     if not root.exists():
         return []
 

@@ -205,6 +205,15 @@ html {{ scroll-behavior: smooth; }}
     )
 
     _POINTER = Path.home() / ".aibom_last_scan"
+    # Pointer file is user-writable; only follow it to paths under the directory
+    # the dashboard was originally launched against, to prevent path traversal.
+    _ALLOWED_ROOT = bom_path.parent.resolve()
+
+    def _is_within_allowed_root(candidate: Path) -> bool:
+        try:
+            return candidate.resolve().is_relative_to(_ALLOWED_ROOT)
+        except (OSError, ValueError):
+            return False
 
     # ── file-change watcher ───────────────────────────────────────────────────
     @app.callback(
@@ -219,12 +228,14 @@ html {{ scroll-behavior: smooth; }}
         last_path  = last_state.get("path",  str(bom_path))
         last_mtime = last_state.get("mtime", 0)
 
-        # follow the pointer to the newest scan file
+        # follow the pointer to the newest scan file (constrained to the launch dir)
         current_path = last_path
         if _POINTER.exists():
             pointed = _POINTER.read_text(encoding="utf-8").strip()
-            if pointed and Path(pointed).exists():
-                current_path = pointed
+            if pointed:
+                pointed_path = Path(pointed)
+                if pointed_path.exists() and _is_within_allowed_root(pointed_path):
+                    current_path = str(pointed_path)
 
         try:
             mtime = Path(current_path).stat().st_mtime

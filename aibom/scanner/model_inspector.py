@@ -274,17 +274,25 @@ def _scan_pickle(path: Path) -> tuple[str, list[str]]:
         return "skipped", []
 
 
+_MAX_PICKLE_BYTES = 64 * 1024 * 1024   # cap embedded pickle reads at 64 MB — guards against zip bombs
+
+
 def _extract_pytorch_pickle(path: Path) -> Optional[bytes]:
     """PyTorch saves are ZIP archives containing archive/data.pkl."""
     try:
         with zipfile.ZipFile(path, "r") as zf:
             pkl_names = [n for n in zf.namelist() if n.endswith("data.pkl")]
             if pkl_names:
+                info = zf.getinfo(pkl_names[0])
+                if info.file_size > _MAX_PICKLE_BYTES:
+                    return None
                 return zf.read(pkl_names[0])
     except (zipfile.BadZipFile, Exception):
         pass
     # Fallback: might be a raw pickle
     try:
+        if path.stat().st_size > _MAX_PICKLE_BYTES:
+            return None
         return path.read_bytes()
     except Exception:
         return None

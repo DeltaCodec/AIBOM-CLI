@@ -49,9 +49,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourname/ai-bom"
-Issues = "https://github.com/yourname/ai-bom/issues"
-Changelog = "https://github.com/yourname/ai-bom/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/DeltaCodec/AIBOM-CLI"
+Repository = "https://github.com/DeltaCodec/AIBOM-CLI"
+Issues = "https://github.com/DeltaCodec/AIBOM-CLI/issues"
+Changelog = "https://github.com/DeltaCodec/AIBOM-CLI/blob/main/CHANGELOG.md"
 
 [project.scripts]
 ai-bom = "aibom.cli:main"

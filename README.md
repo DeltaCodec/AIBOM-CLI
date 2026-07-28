@@ -68,8 +68,6 @@ ai-bom scan . --no-hub --no-cve --no-pypi
 ai-bom dashboard bom.json
 ```
 
-> **Coming soon:** `ai-bom diff`, `ai-bom history`, `ai-bom init`, `--fail-on HIGH` CI flag
-
 ---
 
 ## CLI reference

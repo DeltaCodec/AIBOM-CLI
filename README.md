@@ -87,6 +87,19 @@ ai-bom dashboard bom.json
 | `--no-cve` | off | Skip OSV CVE enrichment |
 | `--quiet / -q` | off | Suppress all terminal output |
 
+### `ai-bom resolve MODEL_ID [MODEL_ID ...]`
+
+Resolves one or more vendor model-id strings (as found in code, config, or
+IaC) into their model provider, hosting provider, and whether the id is a
+floating alias that can silently resolve to a different model version. Pure
+string parsing — no network access, no vendor SDK or API key required. Exits
+non-zero if any id is a floating alias, has hosting indirection (governed by
+a different entity than its trainer, e.g. Bedrock -> AWS), or is unresolvable.
+
+```bash
+ai-bom resolve claude-3-5-sonnet-latest us.anthropic.claude-3-5-sonnet-20241022-v2:0
+```
+
 ### `ai-bom dashboard [BOM_FILE]`
 
 | Flag | Default | Description |

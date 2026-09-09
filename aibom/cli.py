@@ -504,6 +504,49 @@ def dashboard(bom_file: Optional[str], host: str, port: int, debug: bool, no_bro
         sys.exit(1)
 
 
+@main.command()
+@click.argument("model_ids", nargs=-1, required=True)
+def resolve(model_ids: tuple[str, ...]):
+    """Resolve one or more vendor model-id strings.
+
+    Parses each MODEL_ID (as found in code, config, or IaC) and reports its
+    model provider, hosting provider, and whether it's a floating alias that
+    can silently resolve to a different model version. Pure string parsing —
+    no network access, no vendor SDK or API key required.
+    """
+    from aibom.scanner.vendor_resolver import resolve_model_id
+
+    print_banner(console)
+    _section("MODEL IDENTIFIER RESOLUTION")
+
+    exit_code = 0
+    for model_id in model_ids:
+        r = resolve_model_id(model_id)
+        console.print(f"  [bold white]{r.raw}[/]")
+        if not r.resolved:
+            exit_code = 1
+            console.print(f"    [#e06c6c]unresolved[/] — {r.note}")
+            console.print()
+            continue
+
+        provider_line = f"    provider: [bold]{r.model_provider}[/]"
+        if r.hosting_provider and r.hosting_provider != r.model_provider:
+            provider_line += f"  (governed by: [bold]{r.hosting_provider}[/])"
+        console.print(provider_line)
+
+        if r.floating_alias:
+            exit_code = 1
+            console.print(f"    [#e0b96c]floating alias[/] — no pinned snapshot")
+        elif r.snapshot:
+            console.print(f"    pinned snapshot: {r.snapshot}")
+
+        if r.note:
+            console.print(f"    [dim]{r.note}[/]")
+        console.print()
+
+    sys.exit(exit_code)
+
+
 _MODEL_WEIGHT_SUFFIXES = {".safetensors", ".bin", ".pt", ".pth", ".ckpt", ".onnx", ".h5"}
 
 

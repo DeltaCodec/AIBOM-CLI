@@ -1,0 +1,75 @@
+{
+  "project": "ai-bom",
+  "generated_at": "2026-05-14",
+  "version": {
+    "pyproject_toml": "0.1.0",
+    "aibom_init": "0.1.0",
+    "development_status_classifier": "3 - Alpha"
+  },
+  "python_files": [
+    { "path": "aibom/__init__.py", "purpose": "Package init; exports __version__ = '0.1.0'." },
+    { "path": "aibom/cli.py", "purpose": "Click-based CLI entry point exposed as the 'ai-bom' console script." },
+    { "path": "aibom/banner.py", "purpose": "Rich startup banner; resolves installed version via importlib.metadata with pyproject fallback." },
+    { "path": "aibom/cache.py", "purpose": "Simple JSON disk cache with per-entry TTL (used by OSV/vuln lookups)." },
+    { "path": "aibom/scanner/__init__.py", "purpose": "Scanner subpackage public API." },
+    { "path": "aibom/scanner/code_scanner.py", "purpose": "Scan Python source and Jupyter notebooks for from_pretrained() / load_dataset() / dataset constructor calls." },
+    { "path": "aibom/scanner/datasets.py", "purpose": "Discover datasets from local dirs, code refs, and model cards; provides GDPR pre-classification helpers." },
+    { "path": "aibom/scanner/dep_check.py", "purpose": "Cross-reference installed packages against known requirements for a model family." },
+    { "path": "aibom/scanner/deps.py", "purpose": "Parse dependencies from requirements.txt, pyproject.toml, setup.cfg, and pip freeze output." },
+    { "path": "aibom/scanner/frameworks.py", "purpose": "Detect ML frameworks and libraries (PyTorch, Ray, vLLM, DeepSpeed, MLflow, etc.) from imports and installed pkgs." },
+    { "path": "aibom/scanner/hf_cache.py", "purpose": "Scan the local HuggingFace cache (~/.cache/huggingface/hub/) for downloaded models." },
+    { "path": "aibom/scanner/hub.py", "purpose": "Enrich model entries via the HuggingFace Hub API (base model lineage, training datasets, license)." },
+    { "path": "aibom/scanner/model_inspector.py", "purpose": "Local model inspection: architecture metadata, param estimation, pickle safety scan, safetensors header validation, EU AI Act classification." },
+    { "path": "aibom/scanner/models.py", "purpose": "Discover model files by extension (.pt/.safetensors/.onnx/...) and invoke the inspector." },
+    { "path": "aibom/compliance/__init__.py", "purpose": "Compliance subpackage public API." },
+    { "path": "aibom/compliance/cve.py", "purpose": "OSV / NVD CVE enrichment with CVSS v3 and v4 scoring." },
+    { "path": "aibom/compliance/gdpr.py", "purpose": "GDPR / LGPD personal-data risk flagging on datasets; shares the safe-dataset list with the scanner." },
+    { "path": "aibom/compliance/licenses.py", "purpose": "License classification via PyPI metadata plus a default allowlist." },
+    { "path": "aibom/compliance/vulns.py", "purpose": "Aggregate vulnerability summary built from CVEDetail results." },
+    { "path": "aibom/output/__init__.py", "purpose": "Output subpackage public API." },
+    { "path": "aibom/output/audit.py", "purpose": "Append-only JSONL audit trail with size/line rotation." },
+    { "path": "aibom/output/spdx.py", "purpose": "Generate SPDX 3.0 compliant AI-BOM JSON (spec: https://spdx.github.io/spdx-spec/v3.0/)." },
+    { "path": "aibom/dashboard/__init__.py", "purpose": "Empty dashboard subpackage marker." },
+    { "path": "aibom/dashboard/app.py", "purpose": "Dash app factory: fixed navbar, jump-menu sidebar, single scrollable page." },
+    { "path": "aibom/dashboard/callbacks.py", "purpose": "Dash interactive callbacks registration (currently a no-op placeholder)." },
+    { "path": "aibom/dashboard/charts.py", "purpose": "Plotly chart builders — BI-style dark analytics." },
+    { "path": "aibom/dashboard/components.py", "purpose": "Reusable UI building blocks — dense BI style." },
+    { "path": "aibom/dashboard/layouts.py", "purpose": "Single scrollable page layout — dense BI style." },
+    { "path": "aibom/dashboard/theme.py", "purpose": "Color constants matching the CLI palette." },
+    { "path": "tests/conftest.py", "purpose": "Shared pytest fixtures (e.g. minimal_bom)." },
+    { "path": "tests/test_cli.py", "purpose": "Smoke tests for the 'ai-bom scan' CLI." },
+    { "path": "tests/test_compliance.py", "purpose": "Tests for compliance verdict logic (COMPLIANT / NEEDS ATTENTION / ACTION REQUIRED)." },
+    { "path": "tests/test_frameworks.py", "purpose": "Tests for ML framework and library detection." },
+    { "path": "tests/test_gdpr.py", "purpose": "Tests for GDPR / LGPD privacy flagging." }
+  ],
+  "todo_fixme_comments": [],
+  "incomplete_features": [
+    {
+      "location": "aibom/dashboard/callbacks.py:5-8",
+      "type": "placeholder",
+      "description": "register_callbacks() is a no-op stub. Inline comment: 'Placeholder — tabs are rendered statically via layout. Add interactive filtering callbacks here as needed.' Dashboard currently has no interactive filtering.",
+      "severity": "medium"
+    },
+    {
+      "location": "pyproject.toml:17",
+      "type": "maturity",
+      "description": "Classifier 'Development Status :: 3 - Alpha' — project self-declares alpha maturity.",
+      "severity": "info"
+    },
+    {
+      "location": "pyproject.toml:52-53",
+      "type": "metadata",
+      "description": "project.urls Homepage and Issues still point to placeholder 'github.com/yourname/ai-bom' instead of the real 'DeltaCodec/AIBOM-CLI' repo.",
+      "severity": "low"
+    }
+  ],
+  "notes": {
+    "pass_statements": "All 22 bare 'pass' statements found across the codebase are inside 'except:' blocks for defensive error handling, not stubs.",
+    "test_fixture_strings": "tests/conftest.py:41 contains 'GHSA-xxxx-yyyy-zzzz' — intentional test fixture data, not a placeholder bug."
+  },
+  "counts": {
+    "python_files_total": 34,
+    "source_files": 29,
+    "test_files": 5
+  }
+}

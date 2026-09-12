@@ -1,5 +1,4 @@
 import dash
-from dash import Input, Output
 
 
 def register_callbacks(app: dash.Dash, bom: dict) -> None:

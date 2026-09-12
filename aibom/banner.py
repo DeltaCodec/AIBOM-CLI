@@ -1,6 +1,6 @@
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
-from rich import box
 
 
 def _resolve_version() -> str:
@@ -10,8 +10,8 @@ def _resolve_version() -> str:
     except Exception:
         pass
     try:
-        from pathlib import Path
         import re
+        from pathlib import Path
         pyproject = Path(__file__).parent.parent / "pyproject.toml"
         m = re.search(r'^version\s*=\s*"([^"]+)"', pyproject.read_text(), re.MULTILINE)
         if m:

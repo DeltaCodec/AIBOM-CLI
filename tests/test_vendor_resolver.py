@@ -5,7 +5,6 @@ Fixtures are drawn directly from the identifier table in
 docs/vendor-disclosure-scanner-design.md — one row per surface. No network
 access or vendor API key is required or used anywhere in this file.
 """
-import pytest
 
 from aibom.scanner.vendor_resolver import resolve_model_id
 

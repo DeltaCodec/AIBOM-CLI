@@ -442,25 +442,6 @@ def infer_from_model_lineage(
 
 def get_provenance_gaps(models: list, datasets: list[Dataset]) -> list[str]:
     """Return names of models that have no associated dataset entries."""
-    model_names_with_data: set[str] = set()
-
-    # A model has data if any dataset was detected via its model card or lineage
-    # or if it appears in trainingDatasets
-    dataset_model_refs: set[str] = set()
-    for ds in datasets:
-        dm = ds.detection_method or ""
-        if dm.startswith("model-card:") or dm.startswith("lineage:"):
-            # These are attributed to the whole scan, not a specific model
-            pass
-
-    # Simpler heuristic: if we have any CONFIRMED or INFERRED datasets, the scan
-    # found something. Gap = model with source=huggingface but zero card datasets AND
-    # no lineage match.
-    confirmed_or_inferred = {
-        ds.name.lower() for ds in datasets
-        if ds.confidence in ("CONFIRMED", "INFERRED")
-    }
-
     gaps: list[str] = []
     for model in models:
         source_id = (getattr(model, "source_id", "") or "").lower()

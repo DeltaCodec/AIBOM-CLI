@@ -1,5 +1,4 @@
 import json
-import os
 import re
 import sys
 import time
@@ -17,16 +16,30 @@ from rich.rule import Rule
 from rich.table import Table
 
 from aibom.banner import print_banner
-from aibom.compliance import check_licenses, enrich_cves, flag_gdpr, scan_cves_direct, summarize_vulnerabilities
+from aibom.compliance import (
+    check_licenses,
+    enrich_cves,
+    flag_gdpr,
+    scan_cves_direct,
+    summarize_vulnerabilities,
+)
 from aibom.output import AuditTrail, generate_spdx
 from aibom.scanner import (
-    classify_eu_ai_act, detect_frameworks, enrich_models,
-    scan_code_refs, scan_datasets, scan_dependencies, scan_hf_cache, scan_models,
-    enrich_datasets_from_model_cards, infer_from_model_lineage, get_provenance_gaps,
+    classify_eu_ai_act,
+    detect_frameworks,
+    enrich_datasets_from_model_cards,
+    enrich_models,
+    get_provenance_gaps,
+    infer_from_model_lineage,
+    scan_code_refs,
+    scan_datasets,
+    scan_dependencies,
+    scan_hf_cache,
+    scan_models,
 )
-from aibom.scanner.hf_cache import scan_single_model_dir, resolve_hf_model_snapshot
 from aibom.scanner.dep_check import check_missing_deps
 from aibom.scanner.deps import Dependency, _pip_freeze
+from aibom.scanner.hf_cache import resolve_hf_model_snapshot, scan_single_model_dir
 
 console = Console()
 
@@ -50,6 +63,7 @@ _LIB_PACKAGES: dict[str, list[str]] = {
 def _pypi_latest_version(pkg: str) -> Optional[str]:
     """Return the latest PyPI release version for pkg, cached for 24 h."""
     import requests
+
     from aibom.cache import pypi_cache
 
     cache_key = f"latest-{pkg}"
@@ -72,6 +86,7 @@ def _fetch_requires_dist(pkg: str, version: str, wanted: set[str]) -> dict[str, 
     for each dep whose name is in *wanted*."""
     import requests
     from packaging.requirements import Requirement
+
     from aibom.cache import pypi_cache
 
     wanted_norm = {w.lower().replace("-", "_") for w in wanted}
@@ -305,7 +320,7 @@ def scan(
         if not no_cache:
             if is_model_dir_scan:
                 scan_target = _hf_snapshot or project_p
-                progress.update(t, description=f"Inspecting model directory...")
+                progress.update(t, description="Inspecting model directory...")
                 m = scan_single_model_dir(scan_target)
                 if m:
                     hf_cache_models = [m]
@@ -536,7 +551,7 @@ def resolve(model_ids: tuple[str, ...]):
 
         if r.floating_alias:
             exit_code = 1
-            console.print(f"    [#e0b96c]floating alias[/] — no pinned snapshot")
+            console.print("    [#e0b96c]floating alias[/] — no pinned snapshot")
         elif r.snapshot:
             console.print(f"    pinned snapshot: {r.snapshot}")
 
@@ -621,7 +636,7 @@ def _print_summary(bom: dict, license_results, gdpr_flags, vuln_summary, provena
     cve_part = (
         f"  [dim]·[/]  CVEs [bold #e06c6c]{total_cves}[/]"
         if total_cves else
-        f"  [dim]·[/]  CVEs [dim]0[/]"
+        "  [dim]·[/]  CVEs [dim]0[/]"
     )
     fw_count  = s.get("totalFrameworks", 0)
     lib_count = s.get("totalLibraries", 0)
@@ -840,14 +855,14 @@ def _print_summary(bom: dict, license_results, gdpr_flags, vuln_summary, provena
         for fw in fw_items:
             kind = fw.get("kind", "library")
             type_cell = (
-                f"[#78b4f0]framework[/]" if kind == "framework"
-                else f"[#7dd3b0]library[/]"
+                "[#78b4f0]framework[/]" if kind == "framework"
+                else "[#7dd3b0]library[/]"
             )
             ver = fw.get("version") or "—"
             if fw.get("inDeps") and ver not in ("—", "unknown"):
                 ver_cell = f"{ver} [dim](in deps)[/]"
             elif fw.get("inDeps"):
-                ver_cell = f"[dim](in deps)[/]"
+                ver_cell = "[dim](in deps)[/]"
             else:
                 ver_cell = ver if ver != "unknown" else "[dim]unknown[/]"
             detected = fw.get("detectedIn") or []

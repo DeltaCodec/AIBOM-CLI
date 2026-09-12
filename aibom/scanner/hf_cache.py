@@ -9,8 +9,8 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from .models import ModelFile, _sha256
 from .model_inspector import inspect_model_dir
+from .models import ModelFile, _sha256
 
 _DEFAULT_CACHE = Path.home() / ".cache" / "huggingface" / "hub"
 _WEIGHT_SUFFIXES = {".safetensors", ".bin", ".pt", ".pth", ".ckpt", ".onnx", ".h5"}

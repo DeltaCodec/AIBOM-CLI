@@ -1,5 +1,4 @@
 """Tests for compliance verdict logic."""
-import pytest
 
 
 def _verdict(bom: dict) -> str:

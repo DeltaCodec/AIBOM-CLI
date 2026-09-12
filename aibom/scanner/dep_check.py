@@ -4,7 +4,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 
-
 # ── required packages per model family ───────────────────────────────────────
 # Each entry: pip_package → minimum reason / label shown in the warning
 

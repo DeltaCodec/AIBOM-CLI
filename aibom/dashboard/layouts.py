@@ -4,19 +4,38 @@ from __future__ import annotations
 from dash import html
 
 from .charts import (
-    confidence_donut, cve_donut, dataset_privacy_bar,
-    deps_bar, history_line, params_bar, source_type_donut,
+    confidence_donut,
+    cve_donut,
+    dataset_privacy_bar,
+    deps_bar,
+    history_line,
+    params_bar,
+    source_type_donut,
 )
 from .components import (
-    bi_table, chart_box, compliance_table, empty_state,
-    eu_pill, metrics_strip, no_fix_banner, risk_pill,
-    scan_info_bar, section_anchor, sev_pill, td, th, tr,
+    bi_table,
+    chart_box,
+    compliance_table,
+    empty_state,
+    eu_pill,
+    metrics_strip,
+    no_fix_banner,
+    risk_pill,
+    scan_info_bar,
+    section_anchor,
+    td,
+    th,
+    tr,
 )
 from .theme import (
-    AMBER, BLUE, BORDER, CARD_BG, CHART_BG, DIM, GRIDLINE,
-    RED, SURFACE, TEAL, TEXT_MUTED, WHITE,
+    AMBER,
+    DIM,
+    GRIDLINE,
+    RED,
+    TEAL,
+    TEXT_MUTED,
+    WHITE,
 )
-
 
 # ── layout primitives ─────────────────────────────────────────────────────────
 

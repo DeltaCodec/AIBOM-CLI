@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 
 import dash
@@ -11,9 +10,13 @@ from dash import Input, Output, State, clientside_callback, dcc, html
 
 from .layouts import error_layout, page_layout
 from .theme import (
-    BACKGROUND, BORDER, SIDEBAR_BG, TEAL, TEXT_MUTED, WHITE,
+    BACKGROUND,
+    BORDER,
+    SIDEBAR_BG,
+    TEAL,
+    TEXT_MUTED,
+    WHITE,
 )
-
 
 # ── jump menu sections ────────────────────────────────────────────────────────
 

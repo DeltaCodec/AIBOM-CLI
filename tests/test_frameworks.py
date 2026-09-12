@@ -1,7 +1,6 @@
 """Tests for ML framework and library detection."""
-import pytest
 
-from aibom.scanner.frameworks import detect_frameworks, FRAMEWORKS, ML_LIBRARIES, Framework
+from aibom.scanner.frameworks import FRAMEWORKS, ML_LIBRARIES, detect_frameworks
 
 
 class TestClassification:

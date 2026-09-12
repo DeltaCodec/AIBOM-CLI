@@ -5,9 +5,21 @@ import dash_bootstrap_components as dbc
 from dash import html
 
 from .theme import (
-    AMBER, BLUE, BORDER, CARD_BG, CHART_BG, DIM,
-    GRIDLINE, RED, ROW_EVEN, ROW_ODD, SURFACE, TEAL, TEXT_MUTED, WHITE,
-    CONF_HEX, EU_HEX, RISK_HEX, SEV_HEX,
+    AMBER,
+    CHART_BG,
+    CONF_HEX,
+    DIM,
+    EU_HEX,
+    GRIDLINE,
+    RED,
+    RISK_HEX,
+    ROW_EVEN,
+    ROW_ODD,
+    SEV_HEX,
+    SURFACE,
+    TEAL,
+    TEXT_MUTED,
+    WHITE,
 )
 
 # ── primitive helpers ─────────────────────────────────────────────────────────

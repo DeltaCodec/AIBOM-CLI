@@ -1,8 +1,7 @@
 """Tests for GDPR/LGPD privacy flagging."""
-import pytest
 
-from aibom.scanner.datasets import Dataset, _SAFE_DATASETS, _name_tokens, _norm_name
 from aibom.compliance.gdpr import flag_gdpr
+from aibom.scanner.datasets import _SAFE_DATASETS, Dataset, _name_tokens, _norm_name
 
 
 def _make_dataset(name: str, gdpr_risk: str = "HIGH", source_type: str = "web_scrape") -> Dataset:

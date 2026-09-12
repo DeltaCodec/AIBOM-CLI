@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass
 
 # Shared safe list and tokenizer — single source of truth with scanner
-from aibom.scanner.datasets import _SAFE_DATASETS, _norm_name, _name_tokens
+from aibom.scanner.datasets import _SAFE_DATASETS, _name_tokens, _norm_name
 
 _GDPR_HIGH = {
     "clinical", "medical", "health", "biometric", "ssn", "passport",

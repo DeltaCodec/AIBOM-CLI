@@ -4,8 +4,17 @@ from __future__ import annotations
 import plotly.graph_objects as go
 
 from .theme import (
-    AMBER, AXIS_STYLE, BLUE, CHART_BG, CHART_STYLE, CHART_TITLE,
-    DIM, GRIDLINE, RED, SEV_HEX, TEAL, WHITE,
+    AMBER,
+    AXIS_STYLE,
+    BLUE,
+    CHART_BG,
+    CHART_STYLE,
+    CHART_TITLE,
+    DIM,
+    RED,
+    SEV_HEX,
+    TEAL,
+    WHITE,
 )
 
 
@@ -86,7 +95,7 @@ def confidence_donut(bom: dict) -> go.Figure:
     labels, values = zip(*pairs) if pairs else ([], [])
     _c = {"CONFIRMED": TEAL, "INFERRED": AMBER, "UNKNOWN": RED}
     return _donut(list(labels), list(values),
-                  [_c.get(l, DIM) for l in labels],
+                  [_c.get(label, DIM) for label in labels],
                   "DATASET CONFIDENCE", str(sum(values)))
 
 
@@ -136,7 +145,7 @@ def dataset_privacy_bar(bom: dict) -> go.Figure:
         key = risk if risk in counts else "NONE"
         counts[key] += 1
 
-    pairs = [(l, v) for l, v in [("NONE", counts["NONE"]), ("LOW", counts["LOW"]),
+    pairs = [(label, v) for label, v in [("NONE", counts["NONE"]), ("LOW", counts["LOW"]),
                                    ("MEDIUM", counts["MEDIUM"]), ("HIGH", counts["HIGH"])] if v]
     if not pairs:
         return _empty("No risk data")
@@ -145,7 +154,7 @@ def dataset_privacy_bar(bom: dict) -> go.Figure:
     clr_map = {"NONE": DIM, "LOW": "#4a7c6a", "MEDIUM": AMBER, "HIGH": RED}
     fig = go.Figure(go.Bar(
         y=list(labels), x=list(values), orientation="h",
-        marker=dict(color=[clr_map[l] for l in labels]),
+        marker=dict(color=[clr_map[label] for label in labels]),
         text=[str(v) for v in values], textposition="outside",
         textfont=dict(color="#888", size=11),
         hovertemplate="%{y}: %{x}<extra></extra>",

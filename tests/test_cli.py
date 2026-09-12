@@ -64,7 +64,7 @@ class TestScanSmoke:
                 assert key in s, f"Missing summary key: {key}"
 
     def test_scan_nonexistent_path_fails(self):
-        import tempfile, os
+        import tempfile
         with tempfile.TemporaryDirectory() as tmp:
             gone = Path(tmp) / "deleted_subdir"
         # tmp is deleted here; gone definitely doesn't exist

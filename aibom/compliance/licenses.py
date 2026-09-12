@@ -159,7 +159,7 @@ def _local_licenses() -> dict[str, str]:
 
 def _importlib_licenses() -> dict[str, str]:
     try:
-        from importlib.metadata import packages_distributions, metadata
+        from importlib.metadata import metadata, packages_distributions
         result = {}
         for pkg in packages_distributions():
             try:
